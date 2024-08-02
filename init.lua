@@ -89,6 +89,8 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+
 vim.opt.wrap = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -111,6 +113,17 @@ vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
 vim.opt.updatetime = 250
+
+vim.api.nvim_set_keymap('n', '<leader>1', '1gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>2', '2gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>3', '3gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>4', '4gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>5', '5gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>6', '6gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>7', '7gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>8', '8gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>9', '9gt', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>0', '0gt', { noremap = true, silent = false })
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
@@ -140,7 +153,7 @@ vim.opt.scrolloff = 10
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
--- vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -529,6 +542,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'pyright',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
