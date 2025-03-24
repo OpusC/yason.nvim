@@ -115,6 +115,10 @@ vim.opt.signcolumn = 'yes'
 -- Decrease update time
 vim.opt.updatetime = 250
 
+-- Open splits easily
+vim.keymap.set('n', '<leader>tv', ':vsplit | e ' .. vim.fn.expand '%' .. '<CR>', { noremap = true, silent = true })
+
+-- Swap between tabs easily
 vim.api.nvim_set_keymap('n', '<leader>1', '1gt', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>2', '2gt', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>3', '3gt', { noremap = true, silent = false })
@@ -216,6 +220,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  { 'nvimtools/none-ls.nvim' },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -519,18 +524,14 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        gopls = {},
+        pyright = {},
+        tsserver = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
-
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -561,7 +562,9 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'pyright',
+        'tsserver',
       })
+
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -578,6 +581,8 @@ require('lazy').setup({
       }
     end,
   },
+
+  {},
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -606,12 +611,8 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        python = { 'isort', 'black' },
+        javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },
