@@ -158,19 +158,7 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  {
-    'Exafunction/codeium.nvim',
-    event = 'InsertEnter',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'hrsh7th/nvim-cmp',
-    },
-    config = function()
-      require('codeium').setup {
-        enable_chat = false, -- keep it lightweight
-      }
-    end,
-  },
+  -- TODO: AI integration
 
   -- Function signature help
   {
