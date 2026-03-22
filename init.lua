@@ -465,7 +465,23 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--compile-commands-dir=.',
+            '--header-insertion=never',
+            '--query-driver=/usr/bin/g++',
+          },
+          init_options = {
+            compilatinDatabasePath = '.',
+            fallbackFlags = {
+              '-std=c++17',
+              'Iinclude',
+              '-isystem/usr/include/gtest',
+              '-pthread',
+            },
+          },
+        },
         gopls = {},
         pyright = {},
         ts_ls = {},
@@ -543,7 +559,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -553,6 +569,8 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'isort', 'black' },
         javascript = { { 'prettierd', 'prettier' } },
+        cpp = { 'clang-format' },
+        hpp = { 'clang-format' },
       },
     },
   },
